@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEPSTORE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8B5FBF;
+            --primary-dark: #6A3093;
+            --secondary: #FF6B8B;
+            --accent: #00C9FF;
+            --dark: #1A1A2E;
+            --light: #F5F5F5;
+            --text: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--dark) 0%, #16213E 100%);
+            color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-mark {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tagline {
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin-top: -5px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(rgba(26, 26, 46, 0.7), rgba(26, 26, 46, 0.7)), url('https://images.unsplash.com/photo-1560419015-7c427e8ae5ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, transparent 100%);
+            opacity: 0.7;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .main-section {
+            padding: 2rem 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            text-align: center;
+            margin: 0 auto 2rem;
+            position: relative;
+            display: block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 10%;
+            width: 80%;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .product-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .product-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-features li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-features i {
+            color: var(--primary);
+        }
+
+        .buy-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .buy-btn:hover {
+            background: linear-gradient(to right, var(--primary-dark), var(--primary));
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 95, 191, 0.4);
+        }
+
+        .payment-methods {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .payment-method {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border: 2px solid var(--accent);
+            transform: scale(1.05);
+        }
+
+        .highlight .product-name {
+            color: white;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .spec-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .spec-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .spec-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .spec-detail {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .services-list {
+            list-style: none;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .service-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s;
+        }
+
+        .service-item:hover {
+            transform: translateX(10px);
+        }
+
+        .service-name {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .service-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--secondary);
+            background: rgba(255, 107, 139, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .service-highlight {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border: 2px solid var(--accent);
+        }
+
+        footer {
+            background: rgba(26, 26, 46, 0.9);
+            padding: 3rem 0;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-links a {
+            color: var(--light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .copyright {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 2rem;
+        }
+
+        /* Telegram Floating Button */
+        .telegram-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 25px;
+            right: 25px;
+            background: linear-gradient(135deg, #0088cc, #006699);
+            color: white;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 4px 20px rgba(0, 136, 204, 0.5);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .telegram-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(0, 136, 204, 0.7);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .products-grid, .specs-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animated {
+            animation: fadeIn 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-mark">D</div>
+                    <div>
+                        <div class="logo-text">DEPSTORE</div>
+                        <div class="tagline">Pterodactyl agen</div>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#produk"> Produk</a></li>
+                        <li><a href="#server-specs">Server Specs</a></li>
+                        <li><a href="#services">Jasa</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>LAYANAN PREMIUM UNTUK KEBUTUHAN ANDA</h1>
+                <p>Dapatkan akses ke berbagai panel dan layanan profesional dengan harga terjangkau. Pembayaran mudah dengan berbagai metode.</p>
+            </div>
+        </div>
+    </div>
+
+    <main class="container main-section">
+        <h2 class="section-title animated" id="produk">PRODUK</h2>
+        <div class="products-grid">
+            <div class="product-card animated delay-1">
+                <h3 class="product-name">PANEL UNLI</h3>
+                <div class="product-price">Rp 3.000</div>
+                <ul class="product-features">
+                    <li><i class="fas fa-check-circle"></i> Akses Unlimited</li>
+                    <li><i class="fas fa-check-circle"></i> Support 24/7</li>
+                    <li><i class="fas fa-check-circle"></i> Update Berkala</li>
+                </ul>
+                <button class="buy-btn">Beli Sekarang</button>
+                <div class="payment-methods">
+                    <div class="payment-method"><i class="fab fa-google-wallet"></i> Dana</div>
+                    <div class="payment-method"><i class="fab fa-google-wallet"></i> Gopay</div>
+                    <div class="payment-method"><i class="fas fa-money-bill-wave"></i> OVO</div>
+                    <div class="payment-method"><i class="fas fa-qrcode"></i> QRIS</div>
+                </div>
+            </div>
+
+            <div class="product-card animated delay-1">
+                <h3 class="product-name">RESELLER PANEL</h3>
+                <div class="product-price">Rp 5.000</div>
+                <ul class="product-features">
+                    <li><i class="fas fa-check-circle"></i> Bisa Jualan Panel</li>
+                    <li><i class="fas fa-check-circle"></i> Pasti Diurus</li>
+                    <li><i class="fas fa-check-circle"></i> Mokad? tunggu 3-5 hari</li>
+                    <li><i class="fas fa-check-circle"></i> No ptpt</li>
+                </ul>
+                <button class="buy-btn">Beli Sekarang</button>
+                <div class="payment-methods">
+                    <div class="payment-method"><i class="fab fa-google-wallet"></i> Dana</div>
+                    <div class="payment-method"><i class="fab fa-google-wallet"></i> Gopay</div>
+                    <div class="payment-method"><i class="fas fa-money-bill-wave"></i> OVO</div>
+                    <div class="payment-method"><i class="fas fa-qrcode"></i> QRIS</div>
+                </div>
+            </div>
+
+            <div class="product-card animated delay-2">
+                <h3 class="product-name">SCRIPT CPANEL DEPSTORE</h3>
+                <div class="product-price">Rp 10.000</div>
+                <ul class="product-features">
+                    <li><i class="fas fa-check-circle"></i> No update</li>
+                    <li><i class="fas fa-check-circle"></i> Create Panel Work</li>
+                    <li><i class="fas fa-check-circle"></i> Not Free Reseller Panel</li>
+                </ul>
+                <button class="buy-btn">Beli Sekarang</button>
+                <div class="payment-methods">
+                    <div class="payment-method"><i class="fab fa-google-wallet"></i> Dana</div>
+                    <div class="payment-method"><i class="fab fa-google-wallet"></i> Gopay</div>
+                    <div class="payment-method"><i class="fas fa-money-bill-wave"></i> OVO</div>
+                    <div class="payment-method"><i class="fas fa-qrcode"></i> QRIS</div>
+                </div>
+            </div>
+
+            <div class="product-card animated delay-3">
+                <h3 class="product-name">SCRIPT CPANEL DEPSTORE</h3>
+                <div class="product-price">Rp 20.000</div>
+                <ul class="product-features">
+                    <li><i class="fas fa-check-circle"></i> Full update</li>
+                    <li><i class="fas fa-check-circle"></i> Create Panel Work</li>
+                    <li><i class="fas fa-check-circle"></i> Free Reseller Panel</li>
+                </ul>
+                <button class="buy-btn">Beli Sekarang</button>
+                <div class="payment-methods">
+                    <div class="payment-method"><i class="fab fa-google-wallet"></i> Dana</div>
+                    <div class="payment-method"><i class="fab fa-google-wallet"></i> Gopay</div>
+                    <div class="payment-method"><i class="fas fa-money-bill-wave"></i> OVO</div>
+                    <div class="payment-method"><i class="fas fa-qrcode"></i> QRIS</div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title animated" id="server-specs">SERVER SPECS</h2>
+        <div class="specs-grid">
+            <div class="spec-card animated delay-2">
+                <div class="spec-icon"><i class="fas fa-cloud"></i></div>
+                <h3 class="spec-title">VPS</h3>
+                <p class="spec-detail">RAM 16GB | CORE 8</p>
+            </div>
+            </div>
+        </div>
+
+        <h2 class="section-title animated" id="services">JASA DEPSTORE</h2>
+        <ul class="services-list">
+            <li class="service-item animated delay-1">
+                <span class="service-name">Rename SC Bot WA</span>
+                <span class="service-price">10K</span>
+            </li>
+            <li class="service-item animated delay-1">
+                <span class="service-name">Buat Web Payment</span>
+                <span class="service-price">15K</span>
+            </li>
+            <li class="service-item animated delay-2">
+                <span class="service-name">Run SC Bot + Panel</span>
+                <span class="service-price">5K</span>
+            </li>
+            <li class="service-item service-highlight animated delay-3">
+                <span class="service-name">Makan Nasi Goreng</span>
+                <span class="service-price">50jt</span>
+            </li>
+        </ul>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">DEPSTORE</div>
+                <div class="footer-links">
+                    <a href="#panel-public">Panel</a>
+                    <a href="#server-specs">Server Specs</a>
+                    <a href="#services">Jasa Lainnya</a>
+                    <a href="https://t.me/depstore11" target="_blank">Telegram</a>
+                </div>
+                <div class="copyright">
+                    © 2023 Depstore. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://t.me/depstore11" class="telegram-float" target="_blank">
+        <i class="fab fa-telegram"></i>
+    </a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedItems = document.querySelectorAll('.animated');
+            const buyButtons = document.querySelectorAll('.buy-btn');
+            const productCards = document.querySelectorAll('.product-card');
+
+            function checkScroll() {
+                animatedItems.forEach(item => {
+                    const position = item.getBoundingClientRect();
+                    if(position.top < window.innerHeight - 100) {
+                        item.style.opacity = 1;
+                        item.style.transform = 'translateY(0)';
+                    }
+                });
+            }
+
+            // Inisialisasi animasi saat pertama kali dimuat
+            checkScroll();
+
+            // Animasi saat scroll
+            window.addEventListener('scroll', checkScroll);
+
+            // Handler tombol beli
+            buyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    setTimeout(() => {
+                        window.location.href = 'https://t.me/depstore11';
+                    }, 300);
+                });
+            });
+
+            // Efek hover untuk kartu produk
+            productCards.forEach(card => {
+                const originalTransform = card.style.transform;
+                const originalBoxShadow = card.style.boxShadow;
+
+                card.addEventListener('mouseenter', function() {
+                    if(!this.classList.contains('highlight')) {
+                        this.style.transform = 'translateY(-10px)';
+                        this.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.3)';
+                    }
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    if(!this.classList.contains('highlight')) {
+                        this.style.transform = originalTransform;
+                        this.style.boxShadow = originalBoxShadow;
+                    } else {
+                        this.style.transform = 'scale(1.05)';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+  </html>
